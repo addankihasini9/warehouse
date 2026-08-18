@@ -1,0 +1,402 @@
+{
+  "status": "completed",
+  "dataset_rows": 150,
+  "dataset_columns": 31,
+  "derived_targets": [
+    "Delay_Risk_Label",
+    "Stockout_Risk_Label",
+    "Bottleneck_Risk_Label"
+  ],
+  "cleaning_report": {
+    "original_rows": 150,
+    "cleaned_rows": 150,
+    "duplicate_rows_removed": 0,
+    "datetime_coercions": [
+      "Order_Created_At",
+      "Picking_Start",
+      "Picking_End",
+      "Packing_Start",
+      "Packing_End",
+      "Dispatch_At",
+      "Estimated_Delivery"
+    ],
+    "numeric_coercions": [],
+    "high_missing_columns": []
+  },
+  "tasks_detected": [
+    {
+      "task_name": "order_delay_risk",
+      "objective": "order_delay_risk",
+      "target_column": "Delay_Risk_Label",
+      "task_type": "classification",
+      "group_by_column": null,
+      "time_column": null
+    },
+    {
+      "task_name": "stockout_risk",
+      "objective": "stockout_risk",
+      "target_column": "Stockout_Risk_Label",
+      "task_type": "classification",
+      "group_by_column": null,
+      "time_column": null
+    },
+    {
+      "task_name": "demand_forecasting",
+      "objective": "demand",
+      "target_column": "Avg_Daily_Demand_Units",
+      "task_type": "forecasting",
+      "group_by_column": "SKU",
+      "time_column": "Order_Created_At"
+    },
+    {
+      "task_name": "bottleneck",
+      "objective": "bottleneck",
+      "target_column": "Bottleneck_Risk_Label",
+      "task_type": "classification",
+      "group_by_column": null,
+      "time_column": null
+    }
+  ],
+  "task_reports": [
+    {
+      "task": {
+        "task_name": "order_delay_risk",
+        "objective": "order_delay_risk",
+        "target_column": "Delay_Risk_Label",
+        "task_type": "classification",
+        "group_by_column": null,
+        "time_column": null
+      },
+      "status": "skipped",
+      "reason": "Target has fewer than 2 classes after cleaning."
+    },
+    {
+      "task": {
+        "task_name": "stockout_risk",
+        "objective": "stockout_risk",
+        "target_column": "Stockout_Risk_Label",
+        "task_type": "classification",
+        "group_by_column": null,
+        "time_column": null
+      },
+      "status": "skipped",
+      "reason": "Target has fewer than 2 classes after cleaning."
+    },
+    {
+      "task": {
+        "task_name": "demand_forecasting",
+        "objective": "demand",
+        "target_column": "Avg_Daily_Demand_Units",
+        "task_type": "forecasting",
+        "group_by_column": "SKU",
+        "time_column": "Order_Created_At"
+      },
+      "status": "trained",
+      "rows_used": 150,
+      "features_used": [
+        "SKU",
+        "Product_Name",
+        "Warehouse_ID",
+        "Warehouse_Name",
+        "Warehouse_City",
+        "Order_Created_At",
+        "Order_Quantity",
+        "Order_Priority",
+        "Inventory_Available",
+        "Quantity_Allocated",
+        "Quantity_Picked",
+        "Damaged_Items",
+        "Packing_Status",
+        "Picking_Start",
+        "Picking_End",
+        "Packing_Start",
+        "Packing_End",
+        "Processing_Time_Minutes",
+        "Carrier",
+        "Estimated_Delivery",
+        "Total_Inventory_On_Hand",
+        "Total_Reserved",
+        "Total_Available",
+        "Bottleneck_Risk_Label"
+      ],
+      "model": "linear_regression",
+      "metrics": {
+        "mae": 2.7829590483937257e-15,
+        "rmse": 6.5749203497921895e-15,
+        "r2": 1.0
+      },
+      "artifact": "/Users/hasiniaddanki/Desktop/warehouse/artifacts/models/demand_forecasting_Avg_Daily_Demand_Units.joblib",
+      "top_features": [
+        {
+          "feature": "cat__SKU_SKU012",
+          "importance": 0.5180733675266272
+        },
+        {
+          "feature": "cat__Product_Name_Wireless Charger",
+          "importance": 0.5180733675266272
+        },
+        {
+          "feature": "cat__SKU_SKU003",
+          "importance": 0.4855072619522967
+        },
+        {
+          "feature": "cat__Product_Name_USB-C Hub",
+          "importance": 0.48550726195229665
+        },
+        {
+          "feature": "cat__SKU_SKU006",
+          "importance": 0.2529980453747346
+        },
+        {
+          "feature": "cat__Product_Name_Bluetooth Headphones",
+          "importance": 0.2529980453747346
+        },
+        {
+          "feature": "cat__SKU_SKU014",
+          "importance": 0.23908875606445934
+        },
+        {
+          "feature": "cat__Product_Name_Laptop Backpack",
+          "importance": 0.23908875606445934
+        },
+        {
+          "feature": "num__Total_Reserved",
+          "importance": 0.20470042174536704
+        },
+        {
+          "feature": "cat__Product_Name_Mechanical Keyboard",
+          "importance": 0.1659120468468391
+        },
+        {
+          "feature": "cat__SKU_SKU002",
+          "importance": 0.16591204684683908
+        },
+        {
+          "feature": "cat__SKU_SKU008",
+          "importance": 0.15829461230257338
+        },
+        {
+          "feature": "cat__Product_Name_Desk Lamp",
+          "importance": 0.15829461230257338
+        },
+        {
+          "feature": "cat__Product_Name_Power Bank 20000mAh",
+          "importance": 0.13699492189544044
+        },
+        {
+          "feature": "cat__SKU_SKU007",
+          "importance": 0.13699492189544038
+        }
+      ],
+      "feature_columns": [
+        "SKU",
+        "Product_Name",
+        "Warehouse_ID",
+        "Warehouse_Name",
+        "Warehouse_City",
+        "Order_Quantity",
+        "Order_Priority",
+        "Inventory_Available",
+        "Quantity_Allocated",
+        "Quantity_Picked",
+        "Damaged_Items",
+        "Packing_Status",
+        "Processing_Time_Minutes",
+        "Carrier",
+        "Total_Inventory_On_Hand",
+        "Total_Reserved",
+        "Total_Available",
+        "Bottleneck_Risk_Label",
+        "Order_Created_At_year",
+        "Order_Created_At_month",
+        "Order_Created_At_day",
+        "Order_Created_At_dayofweek",
+        "Order_Created_At_hour",
+        "Picking_Start_year",
+        "Picking_Start_month",
+        "Picking_Start_day",
+        "Picking_Start_dayofweek",
+        "Picking_Start_hour",
+        "Picking_End_year",
+        "Picking_End_month",
+        "Picking_End_day",
+        "Picking_End_dayofweek",
+        "Picking_End_hour",
+        "Packing_Start_year",
+        "Packing_Start_month",
+        "Packing_Start_day",
+        "Packing_Start_dayofweek",
+        "Packing_Start_hour",
+        "Packing_End_year",
+        "Packing_End_month",
+        "Packing_End_day",
+        "Packing_End_dayofweek",
+        "Packing_End_hour",
+        "Estimated_Delivery_year",
+        "Estimated_Delivery_month",
+        "Estimated_Delivery_day",
+        "Estimated_Delivery_dayofweek",
+        "Estimated_Delivery_hour"
+      ]
+    },
+    {
+      "task": {
+        "task_name": "bottleneck",
+        "objective": "bottleneck",
+        "target_column": "Bottleneck_Risk_Label",
+        "task_type": "classification",
+        "group_by_column": null,
+        "time_column": null
+      },
+      "status": "trained",
+      "rows_used": 150,
+      "features_used": [
+        "SKU",
+        "Product_Name",
+        "Warehouse_ID",
+        "Warehouse_Name",
+        "Warehouse_City",
+        "Order_Created_At",
+        "Order_Quantity",
+        "Order_Priority",
+        "Inventory_Available",
+        "Quantity_Allocated",
+        "Quantity_Picked",
+        "Damaged_Items",
+        "Packing_Status",
+        "Picking_Start",
+        "Picking_End",
+        "Packing_Start",
+        "Packing_End",
+        "Carrier",
+        "Estimated_Delivery",
+        "Total_Inventory_On_Hand",
+        "Total_Reserved",
+        "Total_Available",
+        "Avg_Daily_Demand_Units",
+        "Total_120_Day_Demand"
+      ],
+      "model": "gradient_boosting",
+      "metrics": {
+        "accuracy": 0.7,
+        "precision_weighted": 0.6320987654320988,
+        "recall_weighted": 0.7,
+        "f1_weighted": 0.6471243042671614,
+        "roc_auc": 0.40909090909090906
+      },
+      "artifact": "/Users/hasiniaddanki/Desktop/warehouse/artifacts/models/bottleneck_Bottleneck_Risk_Label.joblib",
+      "top_features": [
+        {
+          "feature": "num__Estimated_Delivery_hour",
+          "importance": 0.10563790520381988
+        },
+        {
+          "feature": "num__Packing_Start_hour",
+          "importance": 0.07421128559961838
+        },
+        {
+          "feature": "num__Order_Quantity",
+          "importance": 0.06295680532241377
+        },
+        {
+          "feature": "num__Estimated_Delivery_day",
+          "importance": 0.04833249973512136
+        },
+        {
+          "feature": "num__Order_Created_At_dayofweek",
+          "importance": 0.044418422745526404
+        },
+        {
+          "feature": "num__Packing_End_hour",
+          "importance": 0.04063493504864749
+        },
+        {
+          "feature": "cat__Carrier_Ecom Express",
+          "importance": 0.036585749355472166
+        },
+        {
+          "feature": "cat__Carrier_XpressBees",
+          "importance": 0.03538151374727633
+        },
+        {
+          "feature": "num__Picking_Start_hour",
+          "importance": 0.03492375176645139
+        },
+        {
+          "feature": "cat__Carrier_Blue Dart",
+          "importance": 0.03427175670302407
+        },
+        {
+          "feature": "num__Picking_End_hour",
+          "importance": 0.0342575167601843
+        },
+        {
+          "feature": "num__Picking_Start_day",
+          "importance": 0.03381322415483882
+        },
+        {
+          "feature": "num__Order_Created_At_hour",
+          "importance": 0.03377796884552607
+        },
+        {
+          "feature": "num__Total_120_Day_Demand",
+          "importance": 0.02763634811476177
+        },
+        {
+          "feature": "num__Packing_Start_dayofweek",
+          "importance": 0.026906046638613366
+        }
+      ],
+      "feature_columns": [
+        "SKU",
+        "Product_Name",
+        "Warehouse_ID",
+        "Warehouse_Name",
+        "Warehouse_City",
+        "Order_Quantity",
+        "Order_Priority",
+        "Inventory_Available",
+        "Quantity_Allocated",
+        "Quantity_Picked",
+        "Damaged_Items",
+        "Packing_Status",
+        "Carrier",
+        "Total_Inventory_On_Hand",
+        "Total_Reserved",
+        "Total_Available",
+        "Avg_Daily_Demand_Units",
+        "Total_120_Day_Demand",
+        "Order_Created_At_year",
+        "Order_Created_At_month",
+        "Order_Created_At_day",
+        "Order_Created_At_dayofweek",
+        "Order_Created_At_hour",
+        "Picking_Start_year",
+        "Picking_Start_month",
+        "Picking_Start_day",
+        "Picking_Start_dayofweek",
+        "Picking_Start_hour",
+        "Picking_End_year",
+        "Picking_End_month",
+        "Picking_End_day",
+        "Picking_End_dayofweek",
+        "Picking_End_hour",
+        "Packing_Start_year",
+        "Packing_Start_month",
+        "Packing_Start_day",
+        "Packing_Start_dayofweek",
+        "Packing_Start_hour",
+        "Packing_End_year",
+        "Packing_End_month",
+        "Packing_End_day",
+        "Packing_End_dayofweek",
+        "Packing_End_hour",
+        "Estimated_Delivery_year",
+        "Estimated_Delivery_month",
+        "Estimated_Delivery_day",
+        "Estimated_Delivery_dayofweek",
+        "Estimated_Delivery_hour"
+      ]
+    }
+  ]
+}

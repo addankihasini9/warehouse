@@ -1,0 +1,328 @@
+{
+  "file_path": "/Users/hasiniaddanki/Desktop/warehouse/warehouse_decision_engine_sample_dataset.csv",
+  "file_size_bytes": 36668,
+  "row_count": 150,
+  "column_count": 28,
+  "columns": [
+    {
+      "column": "Order_ID",
+      "detected_type": "categorical/text",
+      "pandas_dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 150,
+      "id_like": true
+    },
+    {
+      "column": "SKU",
+      "detected_type": "categorical/text",
+      "pandas_dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 15,
+      "id_like": false
+    },
+    {
+      "column": "Product_Name",
+      "detected_type": "categorical/text",
+      "pandas_dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 15,
+      "id_like": false
+    },
+    {
+      "column": "Warehouse_ID",
+      "detected_type": "categorical/text",
+      "pandas_dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 5,
+      "id_like": false
+    },
+    {
+      "column": "Warehouse_Name",
+      "detected_type": "categorical/text",
+      "pandas_dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 5,
+      "id_like": false
+    },
+    {
+      "column": "Warehouse_City",
+      "detected_type": "categorical/text",
+      "pandas_dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 5,
+      "id_like": false
+    },
+    {
+      "column": "Order_Created_At",
+      "detected_type": "datetime-like",
+      "pandas_dtype": "datetime-candidate",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 150,
+      "id_like": false
+    },
+    {
+      "column": "Order_Quantity",
+      "detected_type": "numeric",
+      "pandas_dtype": "int64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 12,
+      "id_like": false
+    },
+    {
+      "column": "Order_Priority",
+      "detected_type": "categorical/text",
+      "pandas_dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 4,
+      "id_like": false
+    },
+    {
+      "column": "Inventory_Available",
+      "detected_type": "categorical/text",
+      "pandas_dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 2,
+      "id_like": false
+    },
+    {
+      "column": "Quantity_Allocated",
+      "detected_type": "numeric",
+      "pandas_dtype": "int64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 13,
+      "id_like": false
+    },
+    {
+      "column": "Quantity_Picked",
+      "detected_type": "numeric",
+      "pandas_dtype": "int64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 13,
+      "id_like": false
+    },
+    {
+      "column": "Damaged_Items",
+      "detected_type": "numeric",
+      "pandas_dtype": "int64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 3,
+      "id_like": false
+    },
+    {
+      "column": "Packing_Status",
+      "detected_type": "categorical/text",
+      "pandas_dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 3,
+      "id_like": false
+    },
+    {
+      "column": "Picking_Start",
+      "detected_type": "datetime-like",
+      "pandas_dtype": "datetime-candidate",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 146,
+      "id_like": false
+    },
+    {
+      "column": "Picking_End",
+      "detected_type": "datetime-like",
+      "pandas_dtype": "datetime-candidate",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 150,
+      "id_like": false
+    },
+    {
+      "column": "Packing_Start",
+      "detected_type": "datetime-like",
+      "pandas_dtype": "datetime-candidate",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 150,
+      "id_like": false
+    },
+    {
+      "column": "Packing_End",
+      "detected_type": "datetime-like",
+      "pandas_dtype": "datetime-candidate",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 149,
+      "id_like": false
+    },
+    {
+      "column": "Processing_Time_Minutes",
+      "detected_type": "numeric",
+      "pandas_dtype": "int64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 66,
+      "id_like": false
+    },
+    {
+      "column": "Dispatch_Status",
+      "detected_type": "categorical/text",
+      "pandas_dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 2,
+      "id_like": false
+    },
+    {
+      "column": "Carrier",
+      "detected_type": "categorical/text",
+      "pandas_dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 5,
+      "id_like": false
+    },
+    {
+      "column": "Dispatch_At",
+      "detected_type": "datetime-like",
+      "pandas_dtype": "datetime-candidate",
+      "missing_count": 47,
+      "missing_pct": 31.33,
+      "unique_non_null": 102,
+      "id_like": false
+    },
+    {
+      "column": "Estimated_Delivery",
+      "detected_type": "datetime-like",
+      "pandas_dtype": "datetime-candidate",
+      "missing_count": 47,
+      "missing_pct": 31.33,
+      "unique_non_null": 103,
+      "id_like": false
+    },
+    {
+      "column": "Total_Inventory_On_Hand",
+      "detected_type": "numeric",
+      "pandas_dtype": "int64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 14,
+      "id_like": false
+    },
+    {
+      "column": "Total_Reserved",
+      "detected_type": "numeric",
+      "pandas_dtype": "int64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 15,
+      "id_like": false
+    },
+    {
+      "column": "Total_Available",
+      "detected_type": "numeric",
+      "pandas_dtype": "int64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 15,
+      "id_like": false
+    },
+    {
+      "column": "Avg_Daily_Demand_Units",
+      "detected_type": "numeric",
+      "pandas_dtype": "float64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 14,
+      "id_like": false
+    },
+    {
+      "column": "Total_120_Day_Demand",
+      "detected_type": "numeric",
+      "pandas_dtype": "int64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "unique_non_null": 14,
+      "id_like": false
+    }
+  ],
+  "missing_by_column": {
+    "Order_ID": 0,
+    "SKU": 0,
+    "Product_Name": 0,
+    "Warehouse_ID": 0,
+    "Warehouse_Name": 0,
+    "Warehouse_City": 0,
+    "Order_Created_At": 0,
+    "Order_Quantity": 0,
+    "Order_Priority": 0,
+    "Inventory_Available": 0,
+    "Quantity_Allocated": 0,
+    "Quantity_Picked": 0,
+    "Damaged_Items": 0,
+    "Packing_Status": 0,
+    "Picking_Start": 0,
+    "Picking_End": 0,
+    "Packing_Start": 0,
+    "Packing_End": 0,
+    "Processing_Time_Minutes": 0,
+    "Dispatch_Status": 0,
+    "Carrier": 0,
+    "Dispatch_At": 47,
+    "Estimated_Delivery": 47,
+    "Total_Inventory_On_Hand": 0,
+    "Total_Reserved": 0,
+    "Total_Available": 0,
+    "Avg_Daily_Demand_Units": 0,
+    "Total_120_Day_Demand": 0
+  },
+  "duplicate_rows": 0,
+  "categorical_columns": [
+    "Order_ID",
+    "SKU",
+    "Product_Name",
+    "Warehouse_ID",
+    "Warehouse_Name",
+    "Warehouse_City",
+    "Order_Priority",
+    "Inventory_Available",
+    "Packing_Status",
+    "Dispatch_Status",
+    "Carrier"
+  ],
+  "numerical_columns": [
+    "Order_Quantity",
+    "Quantity_Allocated",
+    "Quantity_Picked",
+    "Damaged_Items",
+    "Processing_Time_Minutes",
+    "Total_Inventory_On_Hand",
+    "Total_Reserved",
+    "Total_Available",
+    "Avg_Daily_Demand_Units",
+    "Total_120_Day_Demand"
+  ],
+  "datetime_columns": [
+    "Order_Created_At",
+    "Picking_Start",
+    "Picking_End",
+    "Packing_Start",
+    "Packing_End",
+    "Dispatch_At",
+    "Estimated_Delivery"
+  ],
+  "id_like_columns": [
+    "Order_ID"
+  ]
+}
