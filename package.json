@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node scripts/run_automated_tests.js",
+    "test:e2e": "node scripts/test_order_flow.js"
   },
   "dependencies": {
     "firebase": "^12.17.1",

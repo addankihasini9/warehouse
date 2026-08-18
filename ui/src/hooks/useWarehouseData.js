@@ -41,6 +41,68 @@ const getInitialMetadata = () => {
   };
 };
 
+// ─── Input Sanitization & Validation Helpers ──────────────────────────────────
+
+/** Strip HTML tags to prevent XSS injection in any string field */
+const sanitizeString = (str) => {
+  if (typeof str !== 'string') return str;
+  return str.replace(/<[^>]*>/g, '').replace(/[<>"'`]/g, '').trim();
+};
+
+/** Ensure numeric fields are always ≥ 0 */
+const clampNonNegative = (val) => {
+  const num = Number(val);
+  if (isNaN(num)) return 0;
+  return Math.max(0, num);
+};
+
+/** Validate an Order_ID — must be alphanumeric (with underscores), 3–20 chars */
+const isValidOrderId = (id) => {
+  if (!id || typeof id !== 'string') return false;
+  return /^[A-Za-z0-9_]{3,20}$/.test(id.trim());
+};
+
+/** Fields that must always be non-negative integers */
+const NUMERIC_NON_NEGATIVE_FIELDS = [
+  'Order_Quantity', 'Quantity_Allocated', 'Quantity_Picked',
+  'Total_Inventory_On_Hand', 'Total_Reserved', 'Total_Available',
+  'Damaged_Items', 'row_count', 'Avg_Daily_Demand_Units'
+];
+
+/** Fields that are plain user-facing strings — sanitize for XSS */
+const STRING_SANITIZE_FIELDS = [
+  'Order_Priority', 'Product_Name', 'SKU', 'Warehouse_ID',
+  'Carrier', 'Packing_Status', 'Dispatch_Status'
+];
+
+/**
+ * Apply validation and sanitization to any order update payload.
+ * Throws if a critical field like Order_ID is invalid.
+ */
+const validateAndSanitizeOrderPayload = (orderId, fields) => {
+  if (!isValidOrderId(orderId)) {
+    throw new Error(`Invalid Order_ID: "${orderId}". Must be 3–20 alphanumeric characters.`);
+  }
+
+  const sanitized = { ...fields };
+
+  NUMERIC_NON_NEGATIVE_FIELDS.forEach(field => {
+    if (field in sanitized) {
+      sanitized[field] = clampNonNegative(sanitized[field]);
+    }
+  });
+
+  STRING_SANITIZE_FIELDS.forEach(field => {
+    if (field in sanitized) {
+      sanitized[field] = sanitizeString(sanitized[field]);
+    }
+  });
+
+  return sanitized;
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 export function useWarehouseData() {
   const [orders, setOrders] = useState(getInitialOrders);
   const [metadata, setMetadata] = useState(getInitialMetadata);
@@ -50,15 +112,25 @@ export function useWarehouseData() {
 
   // Expose function to update an order (state + Firestore)
   const updateOrder = async (orderId, updatedFields) => {
+    // Validate + sanitize before writing anywhere
+    let sanitizedFields;
+    try {
+      sanitizedFields = validateAndSanitizeOrderPayload(orderId, updatedFields);
+    } catch (validationErr) {
+      console.error('[updateOrder] Validation failed:', validationErr.message);
+      setError(`Invalid update: ${validationErr.message}`);
+      return;
+    }
+
     // 1. Always update local state first for immediate responsiveness
     setOrders(prev => {
       const exists = prev.some(o => o.Order_ID === orderId || o.id === orderId);
       const updated = exists 
         ? prev.map(o => {
             const match = (o.Order_ID && o.Order_ID === orderId) || (o.id && o.id === orderId);
-            return match ? { ...o, ...updatedFields } : o;
+            return match ? { ...o, ...sanitizedFields } : o;
           })
-        : [...prev, { Order_ID: orderId, id: orderId, ...updatedFields }];
+        : [...prev, { Order_ID: orderId, id: orderId, ...sanitizedFields }];
       
       localStorage.setItem('warehouse_orders', JSON.stringify(updated));
       return updated;
@@ -68,18 +140,24 @@ export function useWarehouseData() {
     if (isFirebaseConnected) {
       try {
         const docRef = doc(db, 'warehouse_orders', orderId);
-        await setDoc(docRef, updatedFields, { merge: true });
-        console.log(`Firestore setDoc successful for order: ${orderId}`);
+        await setDoc(docRef, sanitizedFields, { merge: true });
       } catch (err) {
-        console.error("Firestore setDoc failed, local state preserved:", err);
+        // Log only a safe message to avoid leaking internal structure to the UI
+        console.error("Firestore update failed, local state preserved.");
       }
     }
   };
 
   // Expose function to update metadata (state + LocalStorage + Firestore)
   const updateMetadata = async (updatedFields) => {
+    // Sanitize row_count if present
+    const sanitized = { ...updatedFields };
+    if ('row_count' in sanitized) {
+      sanitized.row_count = clampNonNegative(sanitized.row_count);
+    }
+
     setMetadata(prev => {
-      const updated = { ...prev, ...updatedFields };
+      const updated = { ...prev, ...sanitized };
       localStorage.setItem('warehouseiq_metadata', JSON.stringify(updated));
       return updated;
     });
@@ -87,9 +165,9 @@ export function useWarehouseData() {
     if (isFirebaseConnected) {
       try {
         const metaRef = doc(db, 'warehouseiq_metadata', 'latest_training');
-        await setDoc(metaRef, updatedFields, { merge: true });
+        await setDoc(metaRef, sanitized, { merge: true });
       } catch (err) {
-        console.warn("Failed to persist metadata updates to Firestore:", err.message);
+        console.warn("Failed to persist metadata updates to Firestore.");
       }
     }
   };

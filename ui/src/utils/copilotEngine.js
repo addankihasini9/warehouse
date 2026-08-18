@@ -9,7 +9,14 @@ import {
  * Handles conversational parsing and translates deterministic Decision Engine payloads into natural language explanations.
  */
 
-export function resolveCopilotQuery(query, orders = [], metadata = {}) {
+export function resolveCopilotQuery(rawQuery, orders = [], metadata = {}) {
+  // Sanitize query: strip HTML, limit length, prevent injection
+  const query = (rawQuery || '')
+    .replace(/<[^>]*>/g, '')      // strip HTML tags
+    .replace(/[<>"'`]/g, '')       // strip dangerous chars
+    .slice(0, 500)                  // hard limit 500 chars
+    .trim();
+
   const cleanQuery = query.toLowerCase().trim();
   const trainingReport = metadata?.training_report || { task_reports: [] };
 

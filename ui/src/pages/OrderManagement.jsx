@@ -175,6 +175,7 @@ export default function OrderManagement({ orders = [], updateOrder, searchQuery 
                 fontWeight: 600,
                 fontSize: '0.85rem'
               }}
+              aria-label="Create a new order"
             >
               <Plus size={16} /> New Order
             </button>
@@ -229,6 +230,7 @@ export default function OrderManagement({ orders = [], updateOrder, searchQuery 
                             setSelectedOrderId(order.Order_ID);
                             setShowCreateForm(false);
                           }}
+                          aria-label={`Inspect Order ${order.Order_ID}`}
                           style={{
                             background: 'var(--bg-soft)',
                             border: '1px solid var(--border)',
@@ -265,12 +267,16 @@ export default function OrderManagement({ orders = [], updateOrder, searchQuery 
               exit={{ opacity: 0, x: 50 }}
               className="glass-card"
               style={{flex: 2, minWidth: '300px', borderLeft: '1px solid var(--secondary)'}}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="form-modal-title"
             >
               <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px'}}>
-                <h3 style={{fontSize: '1.2rem', margin: 0}}>Create New Order</h3>
+                <h3 id="form-modal-title" style={{fontSize: '1.2rem', margin: 0}}>Create New Order</h3>
                 <button 
                   onClick={() => setShowCreateForm(false)}
                   style={{background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer'}}
+                  aria-label="Close form"
                 >
                   <X size={18} />
                 </button>
@@ -278,8 +284,9 @@ export default function OrderManagement({ orders = [], updateOrder, searchQuery 
 
               <form onSubmit={handleCreateOrder} style={{display: 'flex', flexDirection: 'column', gap: '16px'}}>
                 <div style={{display: 'flex', flexDirection: 'column', gap: '6px'}}>
-                  <label style={{fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600}}>Select Product / SKU</label>
+                  <label htmlFor="form-sku" style={{fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600}}>Select Product / SKU</label>
                   <select 
+                    id="form-sku"
                     value={formSku}
                     onChange={(e) => setFormSku(e.target.value)}
                     style={{background: 'var(--bg-soft)', border: '1px solid var(--border)', padding: '10px', borderRadius: '8px', color: 'var(--text-main)', outline: 'none'}}
@@ -291,8 +298,9 @@ export default function OrderManagement({ orders = [], updateOrder, searchQuery 
                 </div>
 
                 <div style={{display: 'flex', flexDirection: 'column', gap: '6px'}}>
-                  <label style={{fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600}}>Quantity</label>
+                  <label htmlFor="form-qty" style={{fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600}}>Quantity</label>
                   <input 
+                    id="form-qty"
                     type="number"
                     value={formQty}
                     onChange={(e) => setFormQty(Math.max(1, parseInt(e.target.value, 10)))}
@@ -302,8 +310,9 @@ export default function OrderManagement({ orders = [], updateOrder, searchQuery 
                 </div>
 
                 <div style={{display: 'flex', flexDirection: 'column', gap: '6px'}}>
-                  <label style={{fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600}}>Fulfillment Priority</label>
+                  <label htmlFor="form-priority" style={{fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600}}>Fulfillment Priority</label>
                   <select 
+                    id="form-priority"
                     value={formPriority}
                     onChange={(e) => setFormPriority(e.target.value)}
                     style={{background: 'var(--bg-soft)', border: '1px solid var(--border)', padding: '10px', borderRadius: '8px', color: 'var(--text-main)', outline: 'none'}}

@@ -134,8 +134,9 @@ export default function DataProfileView({ metadata, updateMetadata }) {
 
           <form onSubmit={handleAddColumn} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>Column Name</label>
+              <label htmlFor="meta-col-name" style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>Column Name</label>
               <input 
+                id="meta-col-name"
                 type="text"
                 placeholder="e.g. Storage_Temperature"
                 value={newColName}
@@ -154,8 +155,9 @@ export default function DataProfileView({ metadata, updateMetadata }) {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>Data Type</label>
+              <label htmlFor="meta-col-type" style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>Data Type</label>
               <select 
+                id="meta-col-type"
                 value={newColType}
                 onChange={(e) => setNewColType(e.target.value)}
                 style={{
@@ -175,8 +177,9 @@ export default function DataProfileView({ metadata, updateMetadata }) {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>Missing Percentage (%)</label>
+              <label htmlFor="meta-col-missing" style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>Missing Percentage (%)</label>
               <input 
+                id="meta-col-missing"
                 type="number"
                 min="0"
                 max="100"
@@ -196,8 +199,9 @@ export default function DataProfileView({ metadata, updateMetadata }) {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>Unique Values Count</label>
+              <label htmlFor="meta-col-unique" style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>Unique Values Count</label>
               <input 
+                id="meta-col-unique"
                 type="number"
                 min="1"
                 value={newColUnique}
