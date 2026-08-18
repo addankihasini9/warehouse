@@ -56,6 +56,26 @@ body.light-theme {
   padding: 0;
 }
 
+/* Screen-reader only utility — element is hidden visually but readable by ATs */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Visible keyboard focus outline for all interactive elements */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-app);

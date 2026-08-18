@@ -101,9 +101,30 @@ function App() {
 
   return (
     <div className="dashboard-layout">
-      
+
+      {/* Skip-to-content link for keyboard users */}
+      <a
+        href="#main-content"
+        style={{
+          position: 'absolute',
+          top: '-40px',
+          left: '0',
+          background: 'var(--primary)',
+          color: 'white',
+          padding: '8px 12px',
+          zIndex: 9999,
+          fontWeight: 700,
+          fontSize: '0.8rem',
+          transition: 'top 0.2s'
+        }}
+        onFocus={e => e.currentTarget.style.top = '0'}
+        onBlur={e => e.currentTarget.style.top = '-40px'}
+      >
+        Skip to content
+      </a>
+
       {/* 1. SIDEBAR */}
-      <nav className="sidebar">
+      <nav className="sidebar" aria-label="Main navigation">
         <div>
           <div className="brand" style={{ gap: '8px' }}>
             <Box size={20} color="var(--primary)" />
@@ -118,6 +139,8 @@ function App() {
               key={item.id}
               className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
               onClick={() => setActiveTab(item.id)}
+              aria-current={activeTab === item.id ? 'page' : undefined}
+              aria-label={item.label}
               style={{
                 background: 'transparent',
                 border: 'none',
@@ -132,7 +155,7 @@ function App() {
                 cursor: 'pointer'
               }}
             >
-              <item.icon size={14} />
+              <item.icon size={14} aria-hidden="true" />
               <span>{item.label}</span>
             </button>
           ))}
@@ -146,6 +169,8 @@ function App() {
               key={item.id}
               className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
               onClick={() => setActiveTab(item.id)}
+              aria-current={activeTab === item.id ? 'page' : undefined}
+              aria-label={item.label}
               style={{
                 background: 'transparent',
                 border: 'none',
@@ -160,7 +185,7 @@ function App() {
                 cursor: 'pointer'
               }}
             >
-              <item.icon size={14} />
+              <item.icon size={14} aria-hidden="true" />
               <span>{item.label}</span>
             </button>
           ))}
@@ -177,6 +202,7 @@ function App() {
           </p>
           <button 
             onClick={() => setActiveTab('copilot')}
+            aria-label="Open AI Copilot chat"
             style={{
               width: '100%',
               background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
@@ -195,7 +221,11 @@ function App() {
 
         {/* Footer Admin Profile */}
         <div 
+          role="button"
+          tabIndex={0}
+          aria-label="View admin profile"
           onClick={() => setShowProfileModal(true)}
+          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setShowProfileModal(true); }}
           style={{ display: 'flex', alignItems: 'center', gap: '8px', borderTop: '1px solid var(--border)', paddingTop: '12px', marginTop: 'auto', cursor: 'pointer' }}
         >
           <div style={{
@@ -220,7 +250,7 @@ function App() {
       </nav>
 
       {/* 2. MAIN CONTENT VIEWPORT */}
-      <div className="content-wrapper">
+      <div className="content-wrapper" id="main-content" role="main">
         
         {/* Top Header */}
         <header className="main-header">
@@ -234,12 +264,15 @@ function App() {
             {/* Search Input (conditionally rendered only where needed) */}
             {showSearchInput && (
               <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                <Search size={12} color="var(--text-muted)" style={{ position: 'absolute', left: '10px' }} />
+                <label htmlFor="header-search" className="sr-only">Search {activeTab}</label>
+                <Search size={12} color="var(--text-muted)" style={{ position: 'absolute', left: '10px' }} aria-hidden="true" />
                 <input 
-                  type="text" 
+                  id="header-search"
+                  type="search"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={`Search ${activeTab}...`} 
+                  aria-label={`Search ${activeTab}`}
                   style={{
                     background: 'var(--bg-app)',
                     border: '1px solid var(--border)',
@@ -254,9 +287,10 @@ function App() {
                 {searchQuery && (
                   <button 
                     onClick={() => setSearchQuery('')}
+                    aria-label="Clear search"
                     style={{ position: 'absolute', right: '10px', background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
                   >
-                    <X size={10} />
+                    <X size={10} aria-hidden="true" />
                   </button>
                 )}
               </div>
@@ -274,26 +308,33 @@ function App() {
             <div style={{ position: 'relative' }}>
               <button 
                 onClick={() => setShowNotifications(prev => !prev)}
+                aria-label={`Notifications — ${notificationsList.length} active alerts`}
+                aria-expanded={showNotifications}
+                aria-haspopup="true"
                 style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', position: 'relative' }}
               >
-                <Bell size={14} />
+                <Bell size={14} aria-hidden="true" />
                 {notificationsList.length > 0 && (
-                  <span style={{
-                    position: 'absolute',
-                    top: '-4px',
-                    right: '-4px',
-                    backgroundColor: 'var(--danger)',
-                    color: 'white',
-                    fontSize: '0.5rem',
-                    fontWeight: 700,
-                    width: '10px',
-                    height: '10px',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
-                    {notificationsList.length}
+                  <span
+                    aria-live="polite"
+                    aria-atomic="true"
+                    style={{
+                      position: 'absolute',
+                      top: '-4px',
+                      right: '-4px',
+                      backgroundColor: 'var(--danger)',
+                      color: 'white',
+                      fontSize: '0.5rem',
+                      fontWeight: 700,
+                      width: '10px',
+                      height: '10px',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <span aria-hidden="true">{notificationsList.length}</span>
                   </span>
                 )}
               </button>
